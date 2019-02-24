@@ -8,19 +8,27 @@
             <div id="new_student_form">
                 {!! Form::open(['route' => 'students.store']) !!}
 
-                <!-- NAME -->
-                {!! Form::label('name', 'Name') !!}
-                {!! Form::text('name', null, 
-                    [
-                        'placeholder' => 'Student Name', 
-                        'required' => 'required'
-                    ]) !!}
+                <table>
+                    <tr>
+                        <!-- NAME -->
+                        <td>{!! Form::label('name', 'Name') !!}</td>
+                        <td>{!! Form::text('name', null, 
+                            [
+                                'placeholder' => 'Student Name', 
+                                'required' => 'required'
+                            ]) !!}</td>
+                    </tr>
 
-                <!-- CLASS -->
-                <!-- {!! Form::label('class', "Class") !!}
-                {!! Form::select('class', [1,2,3], null, ['placeholder' => 'Select class (optional)']) !!} -->
+                    <tr>
+                        <!-- CLASS -->
+                        <td>{!! Form::label('class', "Class") !!}</td>
+                        <td>{!! Form::select('class', $classes_data, null, ['placeholder' => 'Select class (optional)']) !!}</td>
+                    </tr>
 
-                {!! Form::submit('ADD') !!}
+                    <tr>
+                        <td colspan="2" style="text-align: center;">{!! Form::submit('ADD') !!}</td>
+                    </tr>
+                </table>
 
                 {!! Form::close() !!}
             </div>

@@ -4,29 +4,26 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h2>Add New Teacher</h2>
-            <div id="new_teacher_form">
-                {!! Form::open(['route' => 'teachers.store']) !!}
+            <h2>{{ $edit_info['classroom']->name }}</h2>
+            <div id="edit_classroom_form">
+                {!! Form::open(['url' => 'classrooms/update/'.$edit_info['classroom']->id]) !!}
 
                 <table>
                     <tr>
                         <!-- NAME -->
                         <td>{!! Form::label('name', 'Name') !!}</td>
-                        <td>{!! Form::text('name', null, 
+                        <td>{!! Form::text('name', $edit_info['classroom']->name, 
                             [
-                                'placeholder' => 'Teacher Name', 
                                 'required' => 'required'
                             ]) !!}</td>
                     </tr>
-
                     <tr>
-                        <td colspan="2" style="text-align: center;">{!! Form::submit('ADD') !!}</td>
+                        <td colspan="2" style="text-align: center;">{!! Form::submit('EDIT') !!}</td>
                     </tr>
                 </table>
 
                 {!! Form::close() !!}
             </div>
-            
         </div>
     </div>
 </div>

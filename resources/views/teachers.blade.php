@@ -5,7 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h2>Teachers</h2>
-            <table>
+            <a href="{{ route('teachers.shownew') }}">Add New Teacher</a>
+            <br><br>
+            <table class="table-list">
                 <tr>
                     <th>Name</th>
                     <th>Classes</th>
@@ -14,10 +16,10 @@
                 </tr>
                 @forelse($teachers_data as $teacher)
                     <tr>
-                        <td>{{ $teacher[0] }}</td>
-                        <td>{{ $teacher[1]}}</td>
-                        <td><a href="">Edit</a></td>
-                        <td><a href="">Delete</a></td>
+                        <td>{{ $teacher[1] }}</td>
+                        <td>{{ $teacher[2] }}</td>
+                        <td><a href="{{ 'teachers/edit/'.$teacher[0] }}">Edit</a></td>
+                        <td><a href="{{ 'teachers/delete/'.$teacher[0] }}">Delete</a></td>
                     </tr>
                     @empty
                     <tr></tr>
