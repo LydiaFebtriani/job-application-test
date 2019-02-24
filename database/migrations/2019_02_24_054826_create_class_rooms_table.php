@@ -13,15 +13,15 @@ class CreateClassRoomsTable extends Migration
      */
     public function up()
     {
-        Schema::create('classrooms', function (Blueprint $table) {
+        Schema::create('class_rooms', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('teacher_id')->unsigned();
+            $table->integer('teacher_id')->unsigned()->nullable();
             $table->string('name');
             $table->timestamps();
         });
 
-        Schema::table('classrooms', function($table) {
-            $table->foreign('teacher_id')->references('id')->on('teachers');
+        Schema::table('class_rooms', function($table) {
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('set null');
         });
     }
 

@@ -21,7 +21,7 @@ class CreateStudentsTable extends Migration
         });
 
         Schema::table('students', function($table) {
-            $table->foreign('class_id')->references('id')->on('classes');
+            $table->foreign('class_id')->references('id')->on('class_rooms')->onDelete('SET NULL');
         });
     }
 
