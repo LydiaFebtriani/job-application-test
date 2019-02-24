@@ -1,0 +1,25 @@
+ .table-list table,
+ .table-list tr,
+ .table-list td,
+ .table-list th{
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+}
+table{
+	width: 100%;
+}
+
+#new_classroom_form #name, #new_classroom_form select,
+#new_student_form #name, #new_student_form select,
+#new_teacher_form #name,
+#edit_classroom_form #name,
+#edit_student_form #name, #edit_student_form select,
+#edit_teacher_form #name, #edit_teacher_form select {
+	width: 80%;
+}
+#new_classroom_form label,
+#new_student_form label,
+#new_teacher_form label{
+	margin-right: 20px;
+}
