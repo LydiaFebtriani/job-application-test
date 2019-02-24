@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\ClassRoom;
-use App\Teacher;
+use App\Student;
 use Illuminate\Http\Request;
 
-class TeachersController extends Controller
+class StudentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,14 +15,14 @@ class TeachersController extends Controller
      */
     public function index()
     {
-        // Teachers' data
-        $teachers = Teacher::all();
-        // Array of string [[teachers name,their classes name]]
+        // Students' data
+        $students = Student::all();
+        // Array of string [[students name,their classes name]]
         $data = array();
 
-        foreach ($teachers as $teacher) {
-            // Get ClassRoom with the same teacher id
-            $classes = ClassRoom::where('teacher_id','=',$teacher->id)->get();
+        foreach ($students as $student) {
+            // Get ClassRoom with the same class id
+            $classes = ClassRoom::where('id','=',$student->class_id)->get();
 
             $string_classes = "";
             foreach ($classes as $class) {
@@ -30,12 +30,12 @@ class TeachersController extends Controller
                 $string_classes .= $class->name;
             }
 
-            // If this teacher has no class, set $string_classes to "-"
+            // If this student has no class, set $string_classes to "-"
             if($string_classes == "") $string_classes = "-";
             // Push to array
-            array_push($data, [$teacher->name,$string_classes]);
+            array_push($data, [$student->name,$string_classes]);
         }
-        return view("teachers")->with("teachers_data",$data);
+        return view("students")->with("students_data",$data);
     }
 
     /**
@@ -62,10 +62,10 @@ class TeachersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Teacher  $teacher
+     * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Teacher $teacher)
+    public function show(Student $student)
     {
         //
     }
@@ -73,10 +73,10 @@ class TeachersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Teacher  $teacher
+     * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit(Teacher $teacher)
+    public function edit(Student $student)
     {
         //
     }
@@ -85,10 +85,10 @@ class TeachersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Teacher  $teacher
+     * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request, Student $student)
     {
         //
     }
@@ -96,10 +96,10 @@ class TeachersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Teacher  $teacher
+     * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teacher $teacher)
+    public function destroy(Student $student)
     {
         //
     }
