@@ -6,10 +6,13 @@ use App\ClassRoom;
 use App\Student;
 use Illuminate\Http\Request;
 
+/**
+ * Controller for Student
+ */
 class StudentsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Student.
      *
      * @return \Illuminate\Http\Response
      */
@@ -17,13 +20,14 @@ class StudentsController extends Controller
     {
         // Students' data
         $students = Student::all();
-        // Array of string [[students name,their classes name]]
+        // Array of string [[students id, name, their classes name]]
         $data = array();
 
         foreach ($students as $student) {
             // Get ClassRoom with the same class id
             $classes = ClassRoom::where('id','=',$student->class_id)->get();
 
+            // Set Classes name to string_classes
             $string_classes = "";
             foreach ($classes as $class) {
                 if($string_classes != "") $string_classes .= ", ";
@@ -33,7 +37,7 @@ class StudentsController extends Controller
             // If this student has no class, set $string_classes to "-"
             if($string_classes == "") $string_classes = "-";
             // Push to array
-            array_push($data, [$student->name,$string_classes]);
+            array_push($data, [$student->id,$student->name,$string_classes]);
         }
         return view("students")->with("students_data",$data);
     }
@@ -49,58 +53,96 @@ class StudentsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Student in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $student = new Student();
+        // Store student's name
+        $student->name = $request->name;
+        // Store student's class_id
+        $student->class_id = $request->class;
+        $student->save();
+
+        return redirect()->route("students");
     }
 
     /**
-     * Display the specified resource.
+     * Display the Add New Student page.
      *
-     * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show()
     {
-        //
+        // Get all Teachers
+        $classes = ClassRoom::all();
+        // Array of Teachers' name
+        $arr_class = array();
+        array_push($arr_class, "");
+        foreach ($classes as $class) {
+            array_push($arr_class, $class->name);
+        }
+        return view('addNewStudent')->with("classes_data",$arr_class);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the Student.
      *
-     * @param  \App\Student  $student
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Student $student)
+    public function edit($id)
     {
-        //
+        // Get Students where id = $id
+        $student = Student::where('id','=',$id)->first();
+
+        // Get all ClassRoom
+        $classrooms = ClassRoom::all();
+        // Array for ClassRoom, [[id => name], ...]
+        $arr_class = array();
+        array_push($arr_class, "");
+        foreach ($classrooms as $classroom) {
+            array_push($arr_class, [$classroom->id => $classroom->name]);
+        }
+
+        return view('editStudent')->with("edit_info",['student'=>$student, 'classes'=>$arr_class]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the Student in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Student  $student
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
-        //
+        // Find Student with $id
+        $student = Student::find($id);
+        // Update name
+        $student->name = $request->name;
+        // Update class_id
+        $student->class_id = $request->class;
+        $student->save();
+
+        return redirect()->route("students");
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the Student from storage.
      *
-     * @param  \App\Student  $student
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy($id)
     {
-        //
+        // Find Student with $id
+        $student = Student::find($id);
+        // Delete Student with $id
+        $student->delete();
+        return redirect()->to('/students');
     }
 }

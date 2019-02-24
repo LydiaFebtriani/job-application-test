@@ -6,10 +6,13 @@ use App\ClassRoom;
 use App\Teacher;
 use Illuminate\Http\Request;
 
+/**
+ * Controller for Student
+ */
 class TeachersController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Teacher.
      *
      * @return \Illuminate\Http\Response
      */
@@ -17,13 +20,14 @@ class TeachersController extends Controller
     {
         // Teachers' data
         $teachers = Teacher::all();
-        // Array of string [[teachers name,their classes name]]
+        // Array of string [[teachers id, name,their classes name]]
         $data = array();
 
         foreach ($teachers as $teacher) {
             // Get ClassRoom with the same teacher id
             $classes = ClassRoom::where('teacher_id','=',$teacher->id)->get();
 
+            // Set Classes name to string_classes
             $string_classes = "";
             foreach ($classes as $class) {
                 if($string_classes != "") $string_classes .= ", ";
@@ -33,7 +37,7 @@ class TeachersController extends Controller
             // If this teacher has no class, set $string_classes to "-"
             if($string_classes == "") $string_classes = "-";
             // Push to array
-            array_push($data, [$teacher->name,$string_classes]);
+            array_push($data, [$teacher->id,$teacher->name,$string_classes]);
         }
         return view("teachers")->with("teachers_data",$data);
     }
@@ -49,58 +53,89 @@ class TeachersController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Teacher in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $teacher = new Teacher();
+        // Store teacher's name
+        $teacher->name = $request->name;
+        $teacher->save();
+
+        return redirect()->route("teachers");
     }
 
     /**
-     * Display the specified resource.
+     * Display the Add New Teacher page.
      *
-     * @param  \App\Teacher  $teacher
      * @return \Illuminate\Http\Response
      */
-    public function show(Teacher $teacher)
+    public function show()
     {
-        //
+        return view('addNewTeacher');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the Teacher.
      *
-     * @param  \App\Teacher  $teacher
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Teacher $teacher)
+    public function edit($id)
     {
-        //
+        // Get Teachers where id = $id
+        $teacher = Teacher::where('id','=',$id)->first();
+
+        // Get all ClassRoom
+        $classrooms = ClassRoom::all();
+        // Array for ClassRoom, [[id => name], ...]
+        $arr_class = array();
+        array_push($arr_class, "");
+        foreach ($classrooms as $classroom) {
+            array_push($arr_class, [$classroom->id => $classroom->name]);
+        }
+
+        return view('editTeacher')->with("edit_info",['teacher'=>$teacher, 'classes'=>$arr_class]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the Teacher in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Teacher  $teacher
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teacher $teacher)
+    public function update(Request $request, $id)
     {
-        //
+        // Find Teacher with $id
+        $teacher = Teacher::find($id);
+        // Update name
+        $teacher->name = $request->name;
+        $teacher->save();
+
+        // Find ClassRoom with $request->class
+        $classroom = ClassRoom::find($request->class);
+        // Update teacher_id
+        $classroom->teacher_id = $id;
+        $classroom->save();
+        return redirect()->route("teachers");
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the Teacher from storage.
      *
-     * @param  \App\Teacher  $teacher
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teacher $teacher)
+    public function destroy($id)
     {
-        //
+        // Find Teacher with $id
+        $teacher = Teacher::find($id);
+        // Delete Teacher with $id
+        $teacher->delete();
+        return redirect()->to('/teachers');
     }
 }

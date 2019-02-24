@@ -7,10 +7,13 @@ use App\Teacher;
 use App\ClassRoom;
 use Illuminate\Http\Request;
 
+/**
+ * Controller for ClassRoom
+ */
 class ClassRoomsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the ClassRoom.
      *
      * @return \Illuminate\Http\Response
      */
@@ -18,7 +21,7 @@ class ClassRoomsController extends Controller
     {
         // ClassRoom's data
         $classrooms = ClassRoom::all();
-        // Array of string [[class room name,their teacher name, students name]]
+        // Array of string [[class room id, name,their teacher name, students name]]
         $data = array();
 
         foreach ($classrooms as $classroom) {
@@ -45,7 +48,7 @@ class ClassRoomsController extends Controller
             if($string_students == "") $string_students = "-";
 
             // Push to array
-            array_push($data, [$classroom->name,$string_teachers,$string_students]);
+            array_push($data, [$classroom->id,$classroom->name,$string_teachers,$string_students]);
         }
         return view("classrooms")->with("classrooms_data",$data);
     }
@@ -61,58 +64,84 @@ class ClassRoomsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created ClassRoom in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $classroom = new ClassRoom();
+        // Store classroom's name
+        $classroom->name = $request->name;
+        // Store classroom's teacher_id
+        $classroom->teacher_id = $request->teacher;
+        $classroom->save();
+
+        return redirect()->route("classrooms");
     }
 
     /**
-     * Display the specified resource.
+     * Display the Add New Class page.
      *
-     * @param  \App\ClassRoom  $classRoom
      * @return \Illuminate\Http\Response
      */
-    public function show(ClassRoom $classRoom)
+    public function show()
     {
-        //
+        // Get all Teachers
+        $teachers = Teacher::all();
+        // Array of Teachers' name
+        $arr_teacher = array();
+        array_push($arr_teacher, "");
+        foreach ($teachers as $teacher) {
+            array_push($arr_teacher, $teacher->name);
+        }
+        return view("addNewClassRoom")->with("teachers_data",$arr_teacher);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the ClassRoom.
      *
-     * @param  \App\ClassRoom  $classRoom
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ClassRoom $classRoom)
+    public function edit($id)
     {
-        //
+        // Get ClassRoom where id = $id
+        $classroom = ClassRoom::where('id','=',$id)->first();
+        return view('editClassRoom')->with("edit_info",['classroom'=>$classroom]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the ClassRoom in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ClassRoom  $classRoom
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ClassRoom $classRoom)
+    public function update(Request $request, $id)
     {
-        //
+        // Find ClassRoom with $id
+        $classroom = ClassRoom::find($id);
+        // Update name
+        $classroom->name = $request->name;
+        $classroom->save();
+
+        return redirect()->route("classrooms");
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the ClassRoom from storage.
      *
-     * @param  \App\ClassRoom  $classRoom
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ClassRoom $classRoom)
+    public function destroy($id)
     {
-        //
+        // Find ClassRoom with $id
+        $classroom = ClassRoom::find($id);
+        // Delete ClassRoom with $id
+        $classroom->delete();
+        return redirect()->to('/classrooms');
     }
 }
