@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <h2>{{ $edit_info['classroom']->name }}</h2>
             <div id="edit_classroom_form">
-                {!! Form::open(['url' => 'classrooms/update/'.$edit_info['classroom']->id]) !!}
+                {!! Form::open(['url' => 'classrooms/update/'.$edit_info['classroom']->id, 'method' => 'PUT']) !!}
 
                 <table>
                     <tr>

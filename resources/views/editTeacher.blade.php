@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <h2>{{ $edit_info['teacher']->name }}</h2>
             <div id="edit_teacher_form">
-                {!! Form::open(['url' => 'teachers/update/'.$edit_info['teacher']->id]) !!}
+                {!! Form::open(['url' => 'teachers/update/'.$edit_info['teacher']->id, 'method' => 'PUT']) !!}
 
                 <table>
                     <tr>
@@ -18,6 +18,12 @@
                             ]) !!}</td>
                     </tr>
                     <tr>
+                        <!-- CURRENT CLASSES -->
+                        <td></td>
+                        <td>Current classes: {{ $edit_info['cur_classes'] }}</td>
+                    </tr>
+                    <tr>
+                        <!-- CLASS -->
                         <td>{!! Form::label('class', "Class") !!}</td>
                         <td>{!! Form::select('class', $edit_info['classes'], null, ['placeholder' => 'Select class']) !!}</td>
                     </tr>
