@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
+	protected $fillable = ['name'];
+
     public function classrooms(){
-    	return $this->hasMany('ClassRoom');
+    	return $this->hasMany('App\ClassRoom');
     }
 }
