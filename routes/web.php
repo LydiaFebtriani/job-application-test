@@ -26,9 +26,9 @@ Route::get('/teachers/new', 'TeachersController@show')->name('teachers.shownew')
 Route::post('/teachers/store', 'TeachersController@store')->name('teachers.store');
 // Edit & Update
 Route::get('/teachers/edit/{id}', 'TeachersController@edit')->name('teachers.edit');
-Route::post('/teachers/update/{id}', 'TeachersController@update')->name('teachers.update');
+Route::put('/teachers/update/{id}', 'TeachersController@update')->name('teachers.update');
 // Delete
-Route::get('/teachers/delete/{id}', 'TeachersController@destroy')->name('teachers.destroy');
+Route::delete('/teachers/delete/{id}', 'TeachersController@destroy')->name('teachers.destroy');
 
 
 /* ROUTE FOR STUDENT */
@@ -38,9 +38,9 @@ Route::get('/students/new', 'StudentsController@show')->name('students.shownew')
 Route::post('/students/store', 'StudentsController@store')->name('students.store');
 // Edit & Update
 Route::get('/students/edit/{id}', 'StudentsController@edit')->name('students.edit');
-Route::post('/students/update/{id}', 'StudentsController@update')->name('students.update');
+Route::put('/students/update/{id}', 'StudentsController@update')->name('students.update');
 // Delete
-Route::get('/students/delete/{id}', 'StudentsController@destroy')->name('students.destroy');
+Route::delete('/students/delete/{id}', 'StudentsController@destroy')->name('students.destroy');
 
 
 /* ROUTE FOR CLASSROOMS */
@@ -50,7 +50,7 @@ Route::get('/classrooms/new', 'ClassRoomsController@show')->name('classrooms.sho
 Route::post('/classrooms/store', 'ClassRoomsController@store')->name('classrooms.store');
 // Edit & Update
 Route::get('/classrooms/edit/{id}', 'ClassRoomsController@edit')->name('classrooms.edit');
-Route::post('/classrooms/update/{id}', 'ClassRoomsController@update')->name('classrooms.update');
+Route::put('/classrooms/update/{id}', 'ClassRoomsController@update')->name('classrooms.update');
 // Delete
-Route::get('/classrooms/delete/{id}', 'ClassRoomsController@destroy')->name('classrooms.destroy');
+Route::delete('/classrooms/delete/{id}', 'ClassRoomsController@destroy')->name('classrooms.destroy');
 
