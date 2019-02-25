@@ -26,29 +26,29 @@ class ClassRoomsController extends Controller
 
         foreach ($classrooms as $classroom) {
             // Get Teacher with the same teacher id
-            $teachers = Teacher::where("id","=",$classroom->teacher_id)->get();
-            // Set Teachers' name to string_teachers
-            $string_teachers = "";
-            foreach ($teachers as $teacher) {
-                if($string_teachers != "") $string_teachers .= ", ";
-                $string_teachers .= $teacher->name;
+            $teacher = $classroom->teacher;
+            // Get teacher name
+            if($teacher == null) {
+                $teacher_name = "-";
+            } else {
+                $teacher_name = $teacher->name;
             }
-            // If this class has no teacher, set $string_teachers to "-"
-            if($string_teachers == "") $string_teachers = "-";
 
             // Get Student with the same class id
-            $students = Student::where("class_id","=",$classroom->id)->get();
+            $students = $classroom->students;
             // Set Students' name to string_students
             $string_students = "";
             foreach ($students as $student) {
-                if($string_students != "") $string_students .= ", ";
-                $string_students .= $student->name;
+                if($student != null) {
+                    if($string_students != "") $string_students .= ", ";
+                    $string_students .= $student->name;
+                }
             }
             // If this class has no student, set $string_students to "-"
             if($string_students == "") $string_students = "-";
 
             // Push to array
-            array_push($data, [$classroom->id,$classroom->name,$string_teachers,$string_students]);
+            array_push($data, [$classroom->id,$classroom->name,$teacher_name,$string_students]);
         }
         return view("classrooms")->with("classrooms_data",$data);
     }
@@ -90,12 +90,24 @@ class ClassRoomsController extends Controller
     {
         // Get all Teachers
         $teachers = Teacher::all();
-        // Array of Teachers' name
+
+        // Array of teacher, [teachers' id => [name, their classes]]
         $arr_teacher = array();
         array_push($arr_teacher, "");
         foreach ($teachers as $teacher) {
-            array_push($arr_teacher, $teacher->name);
+            // Get the teacher's classrooms
+            $classes = $teacher->classrooms;
+            // Set classes' name to str_classes
+            $str_classes = "";
+            foreach ($classes as $class) {
+                if($class != null){
+                    if($str_classes != "") $str_classes .= ", ";
+                    $str_classes .= $class->name;
+                }
+            }
+            array_push($arr_teacher, [$teacher->id => $teacher->name." (".$str_classes.")"]);
         }
+
         return view("addNewClassRoom")->with("teachers_data",$arr_teacher);
     }
 

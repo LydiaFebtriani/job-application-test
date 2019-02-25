@@ -25,19 +25,16 @@ class StudentsController extends Controller
 
         foreach ($students as $student) {
             // Get ClassRoom with the same class id
-            $classes = ClassRoom::where('id','=',$student->class_id)->get();
-
-            // Set Classes name to string_classes
-            $string_classes = "";
-            foreach ($classes as $class) {
-                if($string_classes != "") $string_classes .= ", ";
-                $string_classes .= $class->name;
+            $class = $student->classroom;
+            // Get class name
+            if($class == null) {
+                $class_name = "-";
+            } else {
+                $class_name = $class->name;
             }
 
-            // If this student has no class, set $string_classes to "-"
-            if($string_classes == "") $string_classes = "-";
             // Push to array
-            array_push($data, [$student->id,$student->name,$string_classes]);
+            array_push($data, [$student->id,$student->name,$class_name]);
         }
         return view("students")->with("students_data",$data);
     }
@@ -77,13 +74,14 @@ class StudentsController extends Controller
      */
     public function show()
     {
-        // Get all Teachers
+        // Get all Classroom
         $classes = ClassRoom::all();
-        // Array of Teachers' name
+
+        // Array of classroom, [classrooms' id => name]
         $arr_class = array();
         array_push($arr_class, "");
         foreach ($classes as $class) {
-            array_push($arr_class, $class->name);
+            array_push($arr_class, [$class->id => $class->name]);
         }
         return view('addNewStudent')->with("classes_data",$arr_class);
     }
@@ -124,7 +122,6 @@ class StudentsController extends Controller
         $student = Student::find($id);
         // Update name
         $student->name = $request->name;
-        // Update class_id
         $student->class_id = $request->class;
         $student->save();
 

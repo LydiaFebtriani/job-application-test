@@ -25,17 +25,19 @@ class TeachersController extends Controller
 
         foreach ($teachers as $teacher) {
             // Get ClassRoom with the same teacher id
-            $classes = ClassRoom::where('teacher_id','=',$teacher->id)->get();
+            $classes = $teacher->classrooms;
 
             // Set Classes name to string_classes
             $string_classes = "";
             foreach ($classes as $class) {
-                if($string_classes != "") $string_classes .= ", ";
-                $string_classes .= $class->name;
+                if($class != null){
+                    if($string_classes != "") $string_classes .= ", ";
+                    $string_classes .= $class->name;
+                }
             }
-
             // If this teacher has no class, set $string_classes to "-"
             if($string_classes == "") $string_classes = "-";
+
             // Push to array
             array_push($data, [$teacher->id,$teacher->name,$string_classes]);
         }
@@ -89,6 +91,19 @@ class TeachersController extends Controller
         // Get Teachers where id = $id
         $teacher = Teacher::where('id','=',$id)->first();
 
+        // Get current classes
+        $cur_classes = $teacher->classrooms;
+        // Set Classes name to string_classes
+        $string_classes = "";
+        foreach ($cur_classes as $cur_class) {
+            if($cur_class != null){
+                if($string_classes != "") $string_classes .= ", ";
+                $string_classes .= $cur_class->name;
+            }
+        }
+        // If this teacher has no class, set $string_classes to "-"
+        if($string_classes == "") $string_classes = "-";
+
         // Get all ClassRoom
         $classrooms = ClassRoom::all();
         // Array for ClassRoom, [[id => name], ...]
@@ -98,7 +113,12 @@ class TeachersController extends Controller
             array_push($arr_class, [$classroom->id => $classroom->name]);
         }
 
-        return view('editTeacher')->with("edit_info",['teacher'=>$teacher, 'classes'=>$arr_class]);
+        return view('editTeacher')->with("edit_info",
+            [
+                'teacher'=>$teacher, 
+                'cur_classes'=>$string_classes, 
+                'classes'=>$arr_class
+            ]);
     }
 
     /**
