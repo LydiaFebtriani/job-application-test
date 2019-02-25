@@ -19,7 +19,11 @@
                         <td>{{ $student[1] }}</td>
                         <td>{{ $student[2]}}</td>
                         <td><a href="{{ 'students/edit/'.$student[0] }}">Edit</a></td>
-                        <td><a href="{{ 'students/delete/'.$student[0] }}">Delete</a></td>
+                        <td>
+                            {{ Form::open(['url' => 'students/delete/'.$student[0], 'method' => 'delete']) }}
+                            <button type="submit">Delete</button>
+                            {{ Form::close() }}
+                        </td>
                     </tr>
                     @empty
                     <tr></tr>
