@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     public function classroom(){
-    	return $this->belongsTo('ClassRoom');
+    	return $this->belongsTo('ClassRoom','class_id');
     }
 }
