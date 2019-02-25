@@ -95,7 +95,7 @@ class StudentsController extends Controller
     public function edit($id)
     {
         // Get Students where id = $id
-        $student = Student::where('id','=',$id)->first();
+        $student = Student::find($id);
 
         // Get all ClassRoom
         $classrooms = ClassRoom::all();

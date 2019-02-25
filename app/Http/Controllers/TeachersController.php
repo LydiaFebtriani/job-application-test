@@ -89,7 +89,7 @@ class TeachersController extends Controller
     public function edit($id)
     {
         // Get Teachers where id = $id
-        $teacher = Teacher::where('id','=',$id)->first();
+        $teacher = Teacher::find($id);
 
         // Get current classes
         $cur_classes = $teacher->classrooms;

@@ -120,7 +120,7 @@ class ClassRoomsController extends Controller
     public function edit($id)
     {
         // Get ClassRoom where id = $id
-        $classroom = ClassRoom::where('id','=',$id)->first();
+        $classroom = ClassRoom::find($id);
         return view('editClassRoom')->with("edit_info",['classroom'=>$classroom]);
     }
 
