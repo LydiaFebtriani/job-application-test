@@ -1,6 +1,5 @@
 <?php
 
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class StudentsTableSeeder extends Seeder
@@ -15,33 +14,23 @@ class StudentsTableSeeder extends Seeder
         DB::table('students')->truncate();
 
         DB::table('students')->insert([
-        	'name' => "Student 1",
-        	'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        	'name' => "Student 1"
         ]);
         DB::table('students')->insert([
         	'name' => "Student 2",
-        	'class_id' => 1,
-        	'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        	'classroom_id' => 1
         ]);
         DB::table('students')->insert([
         	'name' => "Student 3",
-        	'class_id' => 2,
-        	'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        	'classroom_id' => 2
         ]);
         DB::table('students')->insert([
         	'name' => "Student 4",
-        	'class_id' => 3,
-        	'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        	'classroom_id' => 3
         ]);
         DB::table('students')->insert([
         	'name' => "Student 5",
-        	'class_id' => 1,
-        	'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        	'classroom_id' => 1
         ]);
     }
 }

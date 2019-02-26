@@ -1,6 +1,5 @@
 <?php
 
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class TeachersTableSeeder extends Seeder
@@ -15,19 +14,13 @@ class TeachersTableSeeder extends Seeder
         DB::table('teachers')->truncate();
 
         DB::table('teachers')->insert([
-        	'name' => "Teacher 1",
-        	'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        	'name' => "Teacher 1"
         ]);
         DB::table('teachers')->insert([
-        	'name' => "Teacher 2",
-        	'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        	'name' => "Teacher 2"
         ]);
         DB::table('teachers')->insert([
-        	'name' => "Teacher 3",
-        	'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        	'name' => "Teacher 3"
         ]);
     }
 }
