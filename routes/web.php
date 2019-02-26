@@ -44,13 +44,15 @@ Route::delete('/students/delete/{id}', 'StudentsController@destroy')->name('stud
 
 
 /* ROUTE FOR CLASSROOMS */
-Route::get('/classrooms', 'ClassRoomsController@index')->name('classrooms');
+Route::get('/classrooms', 'ClassroomsController@index')->name('classrooms');
 // New & Store
-Route::get('/classrooms/new', 'ClassRoomsController@show')->name('classrooms.shownew');
-Route::post('/classrooms/store', 'ClassRoomsController@store')->name('classrooms.store');
+Route::get('/classrooms/new', 'ClassroomsController@show')->name('classrooms.shownew');
+Route::post('/classrooms/store', 'ClassroomsController@store')->name('classrooms.store');
 // Edit & Update
-Route::get('/classrooms/edit/{id}', 'ClassRoomsController@edit')->name('classrooms.edit');
-Route::put('/classrooms/update/{id}', 'ClassRoomsController@update')->name('classrooms.update');
+Route::get('/classrooms/edit/{id}', 'ClassroomsController@edit')->name('classrooms.edit');
+Route::put('/classrooms/update/{id}', 'ClassroomsController@update')->name('classrooms.update');
 // Delete
-Route::delete('/classrooms/delete/{id}', 'ClassRoomsController@destroy')->name('classrooms.destroy');
+Route::delete('/classrooms/delete/{id}', 'ClassroomsController@destroy')->name('classrooms.destroy');
+// Download PDF
+Route::get('/classrooms/download', 'ClassroomsController@downloadPDF')->name('classrooms.download');
 
