@@ -6,6 +6,7 @@
         <div class="col-md-8">
             <h2>Classes</h2>
             <a href="{{ route('classrooms.shownew') }}">Add New Class</a>
+            <a href="{{ route('classrooms.download') }}" style='float: right;'>Download PDF</a>
             <br><br>
             <table class="table-list">
                 <tr>
