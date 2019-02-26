@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ClassRoom;
+use App\Classroom;
 use App\Student;
 use Illuminate\Http\Request;
 
@@ -34,7 +34,7 @@ class StudentsController extends Controller
         $data = array();
 
         foreach ($students as $student) {
-            // Get ClassRoom with the same class id
+            // Get Classroom with the same class id
             $class = $student->classroom;
             // Get class name
             if($class == null) {
@@ -70,8 +70,8 @@ class StudentsController extends Controller
         $student = new Student();
         // Store student's name
         $student->name = $request->name;
-        // Store student's class_id
-        $student->class_id = $request->class;
+        // Store student's classroom_id
+        $student->classroom_id = $request->class;
         $student->save();
 
         return redirect()->route("students");
@@ -85,9 +85,9 @@ class StudentsController extends Controller
     public function show()
     {
         // Get all Classroom
-        $classes = ClassRoom::all();
+        $classes = Classroom::all();
 
-        // Array of classroom, [classrooms' id => name]
+        // Array of Classroom, [classrooms' id => name]
         $arr_class = array();
         array_push($arr_class, "");
         foreach ($classes as $class) {
@@ -107,9 +107,9 @@ class StudentsController extends Controller
         // Get Students where id = $id
         $student = Student::find($id);
 
-        // Get all ClassRoom
-        $classrooms = ClassRoom::all();
-        // Array for ClassRoom, [[id => name], ...]
+        // Get all Classroom
+        $classrooms = Classroom::all();
+        // Array for Classroom, [[id => name], ...]
         $arr_class = array();
         array_push($arr_class, "");
         foreach ($classrooms as $classroom) {
@@ -132,7 +132,7 @@ class StudentsController extends Controller
         $student = Student::find($id);
         // Update name
         $student->name = $request->name;
-        $student->class_id = $request->class;
+        $student->classroom_id = $request->class;
         $student->save();
 
         return redirect()->route("students");

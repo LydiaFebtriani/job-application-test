@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ClassRoom;
+use App\Classroom;
 use App\Teacher;
 use Illuminate\Http\Request;
 
@@ -34,7 +34,7 @@ class TeachersController extends Controller
         $data = array();
 
         foreach ($teachers as $teacher) {
-            // Get ClassRoom with the same teacher id
+            // Get Classroom with the same teacher id
             $classes = $teacher->classrooms;
 
             // Set Classes name to string_classes
@@ -114,9 +114,9 @@ class TeachersController extends Controller
         // If this teacher has no class, set $string_classes to "-"
         if($string_classes == "") $string_classes = "-";
 
-        // Get all ClassRoom
-        $classrooms = ClassRoom::all();
-        // Array for ClassRoom, [[id => name], ...]
+        // Get all Classroom
+        $classrooms = Classroom::all();
+        // Array for Classroom, [[id => name], ...]
         $arr_class = array();
         array_push($arr_class, "");
         foreach ($classrooms as $classroom) {
@@ -146,8 +146,8 @@ class TeachersController extends Controller
         $teacher->name = $request->name;
         $teacher->save();
 
-        // Find ClassRoom with $request->class
-        $classroom = ClassRoom::find($request->class);
+        // Find Classroom with $request->class
+        $classroom = Classroom::find($request->class);
         // Update teacher_id
         $classroom->teacher_id = $id;
         $classroom->save();
