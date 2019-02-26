@@ -22,7 +22,11 @@
                     <tr>
                         <!-- TEACHER -->
                         <td>{!! Form::label('teacher', "Teacher") !!}</td>
-                        <td>{!! Form::select('teacher', $teachers_data, null, ['placeholder' => 'Select teacher']) !!}</td>
+                        <td>{!! Form::select('teacher', $teachers_data, null, 
+                                [
+                                    'placeholder' => 'Select teacher',
+                                    'required' => 'required'
+                                ]) !!}</td>
                     </tr>
 
                     <tr>
